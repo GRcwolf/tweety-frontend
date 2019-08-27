@@ -10,20 +10,33 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Helmet from 'react-helmet';
 import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import GlobalStyle from '../../global-styles';
+import 'materialize-css/dist/js/materialize.min';
+
+import Header from '../Header';
 
 export default function App() {
   return (
-    <div className="container">
-      <div className="content">
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-        <GlobalStyle />
+    <div>
+      <Helmet>
+        <link
+          href="http://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
+      </Helmet>
+      <Header />
+      <div className="container">
+        <div className="content">
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+          <GlobalStyle />
+        </div>
       </div>
     </div>
   );

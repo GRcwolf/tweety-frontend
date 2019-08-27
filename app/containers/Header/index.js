@@ -1,10 +1,12 @@
 import React from 'react';
+import { NavItem, Navbar } from 'react-materialize';
 
 const Header = () => (
   <header>
-    <nav>
-      <ul />
-    </nav>
+    <Navbar alignLinks="right">
+      <NavItem href="">Getting started</NavItem>
+      <NavItem href="components.html">Components</NavItem>
+    </Navbar>
   </header>
 );
 

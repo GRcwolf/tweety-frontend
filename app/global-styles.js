@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import 'materialize-css/dist/css/materialize.min.css';
 
 const GlobalStyle = createGlobalStyle`
   html,
