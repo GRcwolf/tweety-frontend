@@ -15,10 +15,11 @@ import HomePage from 'containers/HomePage/Loadable';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SignUpPage from 'containers/SignUpPage/Loadable';
-import GlobalStyle from '../../global-styles';
 import 'materialize-css/dist/js/materialize.min';
 
-import Header from '../Header';
+import Header from 'containers/Header';
+import LoginPage from 'containers/LoginPage/Loadable';
+import GlobalStyle from '../../global-styles';
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
         <div className="content">
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route exact path="/login" component={LoginPage} />
             <Route exact path="/sign-up" component={SignUpPage} />
             <Route component={NotFoundPage} />
           </Switch>

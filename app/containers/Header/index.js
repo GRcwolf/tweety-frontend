@@ -15,7 +15,7 @@ const Header = () => (
           </a>
         }
       >
-        <Link to="/">Log in</Link>
+        <Link to="/login">Log in</Link>
         <Link to="/sign-up">Sign up</Link>
       </Dropdown>
     </Navbar>
