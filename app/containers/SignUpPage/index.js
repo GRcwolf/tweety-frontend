@@ -19,7 +19,7 @@ const SignUpPage = props => {
         <Row>
           <TextInput
             onChange={props.onChangeUserObject}
-            value={props.userObject.firstName}
+            value={props.firstName}
             name="firstName"
             label="First name"
             class="validate"
@@ -28,7 +28,7 @@ const SignUpPage = props => {
           <TextInput
             onChange={props.onChangeUserObject}
             name="lastName"
-            value={props.userObject.lastName}
+            value={props.lastName}
             label="Last name"
             class="validate"
             s="6"
@@ -36,7 +36,7 @@ const SignUpPage = props => {
         </Row>
         <Row>
           <TextInput
-            value={props.userObject.userName}
+            value={props.userName}
             label="User name"
             class="validate"
             s="12"
@@ -53,7 +53,7 @@ const SignUpPage = props => {
         </Row>
         <Row>
           <TextInput
-            value={props.userObject.email}
+            value={props.email}
             label="E-Mail"
             type="email"
             class="validate"
@@ -72,8 +72,11 @@ const SignUpPage = props => {
 };
 
 SignUpPage.propTypes = {
-  userObject: PropTypes.object,
   onChangeUserObject: PropTypes.func,
+  firstName: PropTypes.string,
+  userName: PropTypes.string,
+  lastName: PropTypes.string,
+  email: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
