@@ -7,7 +7,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const signUpPageReducer = (state = initialState, action) =>
+const loginPageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case CHANGE_LOGIN_FORM_DATA:
@@ -16,4 +16,4 @@ const signUpPageReducer = (state = initialState, action) =>
     }
   });
 
-export default signUpPageReducer;
+export default loginPageReducer;

@@ -1,16 +1,40 @@
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectUserObject = state => state.userObject || initialState;
+export const selectSignUpPage = state => state.signUpPage || initialState;
 
-/**
- * Select the language locale
- */
-
-const makeSelectUserObject = () =>
+export const makeSelectUserName = () =>
   createSelector(
-    selectUserObject,
-    signUpPageState => signUpPageState.userObject,
+    selectSignUpPage,
+    signUpPageState => signUpPageState.userName,
   );
 
-export { selectUserObject, makeSelectUserObject };
+export const makeSelectFirstName = () =>
+  createSelector(
+    selectSignUpPage,
+    signUpPageState => signUpPageState.firstName,
+  );
+
+export const makeSelectLastName = () =>
+  createSelector(
+    selectSignUpPage,
+    signUpPageState => signUpPageState.lastName,
+  );
+
+export const makeSelectPassword = () =>
+  createSelector(
+    selectSignUpPage,
+    signUpPageState => signUpPageState.password,
+  );
+
+export const makeSelectConfirmPassword = () =>
+  createSelector(
+    selectSignUpPage,
+    signUpPageState => signUpPageState.confirmPassword,
+  );
+
+export const makeSelectEmail = () =>
+  createSelector(
+    selectSignUpPage,
+    signUpPageState => signUpPageState.email,
+  );

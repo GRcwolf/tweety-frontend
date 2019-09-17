@@ -3,31 +3,46 @@ import { Button, Icon, Row, TextInput } from 'react-materialize';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { makeSelectUserObject } from './selectors';
+import { useInjectReducer } from 'utils/injectReducer';
+import {
+  makeSelectUserName,
+  makeSelectLastName,
+  makeSelectPassword,
+  makeSelectConfirmPassword,
+  makeSelectFirstName,
+  makeSelectEmail,
+} from './selectors';
 import { changeUserObject } from './actions';
-import { useInjectReducer } from '../../utils/injectReducer';
 import reducer from './reducer';
 
 const key = 'signUpPage';
 
-const SignUpPage = props => {
+const SignUpPage = ({
+  firstName,
+  lastName,
+  userName,
+  email,
+  password,
+  confirmPassword,
+  onChangeUserObject,
+}) => {
   useInjectReducer({ key, reducer });
   return (
     <Row>
-      <form onSubmit={console.log('form submit')} className="col s12">
+      <form onSubmit={console.log('props')} className="col s12">
         <Row>
           <TextInput
-            onChange={props.onChangeUserObject}
-            value={props.firstName}
+            onChange={onChangeUserObject}
+            value={firstName}
             name="firstName"
             label="First name"
             class="validate"
             s="6"
           />
           <TextInput
-            onChange={props.onChangeUserObject}
+            onChange={onChangeUserObject}
             name="lastName"
-            value={props.lastName}
+            value={lastName}
             label="Last name"
             class="validate"
             s="6"
@@ -35,15 +50,28 @@ const SignUpPage = props => {
         </Row>
         <Row>
           <TextInput
-            value={props.userName}
+            onChange={onChangeUserObject}
+            value={userName}
             label="User name"
             class="validate"
+            name="userName"
             s="12"
           />
         </Row>
         <Row>
-          <TextInput label="Password" type="password" class="validate" s="6" />
           <TextInput
+            onChange={onChangeUserObject}
+            value={password}
+            name="password"
+            label="Password"
+            type="password"
+            class="validate"
+            s="6"
+          />
+          <TextInput
+            onChange={onChangeUserObject}
+            value={confirmPassword}
+            name="confirmPassword"
             label="Confirm password"
             type="password"
             class="validate"
@@ -52,7 +80,9 @@ const SignUpPage = props => {
         </Row>
         <Row>
           <TextInput
-            value={props.email}
+            onChange={onChangeUserObject}
+            value={email}
+            name="email"
             label="E-Mail"
             type="email"
             class="validate"
@@ -76,10 +106,17 @@ SignUpPage.propTypes = {
   userName: PropTypes.string,
   lastName: PropTypes.string,
   email: PropTypes.string,
+  password: PropTypes.string,
+  confirmPassword: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  userObject: makeSelectUserObject(),
+  userName: makeSelectUserName(),
+  firstName: makeSelectFirstName(),
+  lastName: makeSelectLastName(),
+  email: makeSelectEmail(),
+  password: makeSelectPassword(),
+  confirmPassword: makeSelectConfirmPassword(),
 });
 
 function mapDispatchToProps(dispatch) {

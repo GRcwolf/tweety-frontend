@@ -6,6 +6,8 @@ export const initialState = {
   lastName: '',
   firstName: '',
   email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */

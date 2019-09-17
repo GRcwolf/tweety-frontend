@@ -5,12 +5,12 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import reducer from './reducer';
-import { makeSelectLoginData } from './selectors';
+import { makeSelectPassword, makeSelectLoginName } from './selectors';
 import { changeLoginData } from './actions';
 
 const key = 'loginPage';
 
-const LoginPage = props => {
+const LoginPage = ({ loginName, password, onChangeLoginData }) => {
   useInjectReducer({ key, reducer });
 
   return (
@@ -19,10 +19,11 @@ const LoginPage = props => {
         <Row>
           <TextInput
             s="12"
-            value={props.loginName}
-            onChange={props.onChangeLoginData}
+            value={loginName}
+            onChange={onChangeLoginData}
             label="Username/E-Mail"
             name="loginName"
+            validate
           />
         </Row>
         <Row>
@@ -30,8 +31,10 @@ const LoginPage = props => {
             s="12"
             label="Password"
             name="password"
-            onChange={props.onChangeLoginData}
+            value={password}
+            onChange={onChangeLoginData}
             type="password"
+            validate
           />
         </Row>
         <Row>
@@ -47,11 +50,13 @@ const LoginPage = props => {
 
 LoginPage.propTypes = {
   loginName: PropTypes.string,
+  password: PropTypes.string,
   onChangeLoginData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  userObject: makeSelectLoginData(),
+  loginName: makeSelectLoginName(),
+  password: makeSelectPassword(),
 });
 
 function mapDispatchToProps(dispatch) {
