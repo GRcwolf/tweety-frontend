@@ -1,9 +1,6 @@
 import { createSelector } from 'reselect';
-import signUpPageReducer, { initialState } from './reducer';
+import { initialState } from './reducer';
 
-/**
- * Direct selector to the languageToggle state domain
- */
 const selectUserObject = state => state.userObject || initialState;
 
 /**

@@ -12,7 +12,6 @@ const key = 'signUpPage';
 
 const SignUpPage = props => {
   useInjectReducer({ key, reducer });
-  console.log(props);
   return (
     <Row>
       <form onSubmit={console.log('form submit')} className="col s12">
