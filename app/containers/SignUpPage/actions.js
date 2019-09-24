@@ -1,9 +1,9 @@
 import { CHANGE_USER_OBJECT, SIGN_UP } from './constants';
 
-export function signUp(userObject) {
+export function signUp(response) {
   return {
     type: SIGN_UP,
-    userObject,
+    response,
   };
 }
 

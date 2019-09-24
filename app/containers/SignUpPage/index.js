@@ -14,6 +14,8 @@ import {
 } from './selectors';
 import { changeUserObject } from './actions';
 import reducer from './reducer';
+import { signUpUser } from './saga';
+import { useInjectSaga } from '../../utils/injectSaga';
 
 const key = 'signUpPage';
 
@@ -27,6 +29,7 @@ const SignUpPage = ({
   onChangeUserObject,
 }) => {
   useInjectReducer({ key, reducer });
+  useInjectSaga({ key, signUpUser });
   return (
     <Row>
       <form onSubmit={console.log('props')} className="col s12">
