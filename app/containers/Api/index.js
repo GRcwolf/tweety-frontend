@@ -36,4 +36,6 @@ export const loginWithEmail = ({ email, password }) =>
     .then(response => response.data);
 
 export const loginWithUsername = ({ username, password }) =>
-  axios.post(`${apiPath}/login`, { username, password });
+  axios
+    .post(`${apiPath}/login`, { username, password })
+    .then(response => response.data);
