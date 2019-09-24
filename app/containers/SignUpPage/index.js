@@ -5,16 +5,17 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
-  makeSelectUserName,
+  makeSelectConfirmPassword,
+  makeSelectEmail,
+  makeSelectFirstName,
   makeSelectLastName,
   makeSelectPassword,
-  makeSelectConfirmPassword,
-  makeSelectFirstName,
-  makeSelectEmail,
+  makeSelectUserName,
 } from './selectors';
 import { changeUserObject } from './actions';
+import { signUpUser } from '../App/actions';
 import reducer from './reducer';
-import { signUpUser } from './saga';
+import saga from './saga';
 import { useInjectSaga } from '../../utils/injectSaga';
 
 const key = 'signUpPage';
@@ -27,28 +28,29 @@ const SignUpPage = ({
   password,
   confirmPassword,
   onChangeUserObject,
+  onFormSubmit,
 }) => {
   useInjectReducer({ key, reducer });
-  useInjectSaga({ key, signUpUser });
+  useInjectSaga({ key, saga });
   return (
     <Row>
-      <form onSubmit={console.log('props')} className="col s12">
+      <form onSubmit={onFormSubmit} className="col s12">
         <Row>
           <TextInput
             onChange={onChangeUserObject}
             value={firstName}
             name="firstName"
             label="First name"
-            class="validate"
-            s="6"
+            className="validate"
+            s={6}
           />
           <TextInput
             onChange={onChangeUserObject}
             name="lastName"
             value={lastName}
             label="Last name"
-            class="validate"
-            s="6"
+            className="validate"
+            s={6}
           />
         </Row>
         <Row>
@@ -56,9 +58,9 @@ const SignUpPage = ({
             onChange={onChangeUserObject}
             value={userName}
             label="User name"
-            class="validate"
+            className="validate"
             name="userName"
-            s="12"
+            s={12}
           />
         </Row>
         <Row>
@@ -68,8 +70,8 @@ const SignUpPage = ({
             name="password"
             label="Password"
             type="password"
-            class="validate"
-            s="6"
+            className="validate"
+            s={6}
           />
           <TextInput
             onChange={onChangeUserObject}
@@ -77,8 +79,8 @@ const SignUpPage = ({
             name="confirmPassword"
             label="Confirm password"
             type="password"
-            class="validate"
-            s="6"
+            className="validate"
+            s={6}
           />
         </Row>
         <Row>
@@ -88,8 +90,8 @@ const SignUpPage = ({
             name="email"
             label="E-Mail"
             type="email"
-            class="validate"
-            s="12"
+            className="validate"
+            s={12}
           />
         </Row>
         <Row>
@@ -105,6 +107,7 @@ const SignUpPage = ({
 
 SignUpPage.propTypes = {
   onChangeUserObject: PropTypes.func,
+  onFormSubmit: PropTypes.func,
   firstName: PropTypes.string,
   userName: PropTypes.string,
   lastName: PropTypes.string,
@@ -126,6 +129,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onChangeUserObject: evt =>
       dispatch(changeUserObject(evt.target.name, evt.target.value)),
+    onFormSubmit: evt => {
+      evt.preventDefault();
+      dispatch(signUpUser());
+    },
   };
 }
 

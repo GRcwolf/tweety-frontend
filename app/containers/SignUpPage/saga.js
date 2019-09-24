@@ -1,26 +1,39 @@
-import { call, put } from 'redux-saga/effects';
-import { createUser } from '../Api';
+import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { createUser } from 'containers/Api';
+import { SIGN_UP_USER } from '../App/constants';
+import { userSignedUp, userSignUpError } from '../App/actions';
+import {
+  makeSelectEmail,
+  makeSelectFirstName,
+  makeSelectLastName,
+  makeSelectPassword,
+  makeSelectUserName,
+} from './selectors';
 
-import { signUp } from './actions';
-
-export function* signUpUser({
-  firstname,
-  lastname,
-  username,
-  email,
-  password,
-}) {
+export function* signUpUserCall() {
   // eslint-disable-next-line no-param-reassign
-  password = btoa(password);
+  const firstname = yield select(makeSelectFirstName());
+  const lastname = yield select(makeSelectLastName());
+  const username = yield select(makeSelectUserName());
+  const email = yield select(makeSelectEmail());
+  const password = btoa(yield select(makeSelectPassword()));
 
-  const responseData = yield call(
-    createUser({
-      firstname,
-      lastname,
-      username,
-      email,
-      password,
-    }),
-  );
-  yield put(signUp(responseData));
+  try {
+    const response = yield call(
+      createUser({
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+      }),
+    );
+    yield put(userSignedUp(response));
+  } catch (error) {
+    yield put(userSignUpError(error));
+  }
+}
+
+export default function* signUpData() {
+  yield takeLatest(SIGN_UP_USER, signUpUserCall);
 }
