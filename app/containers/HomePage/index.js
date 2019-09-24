@@ -6,13 +6,13 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { Row } from 'react-materialize';
+import TweetsView from '../TweetsView';
 
 export default function HomePage() {
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <Row>
+      <TweetsView tweetAttributes={[]} />
+    </Row>
   );
 }
