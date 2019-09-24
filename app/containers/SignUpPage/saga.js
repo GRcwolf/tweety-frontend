@@ -1,4 +1,4 @@
-import { call, put, takeLatest, select } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { createUser } from 'containers/Api';
 import { SIGN_UP_USER } from '../App/constants';
 import { userSignedUp, userSignUpError } from '../App/actions';

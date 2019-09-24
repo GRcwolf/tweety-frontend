@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Helmet from 'react-helmet';
 import HomePage from 'containers/HomePage/Loadable';
@@ -19,9 +19,18 @@ import 'materialize-css/dist/js/materialize.min';
 
 import Header from 'containers/Header';
 import LoginPage from 'containers/LoginPage/Loadable';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import GlobalStyle from '../../global-styles';
+import { redirectSucceeded } from './actions';
+import { makeSelectRedirect } from './selectors';
 
-export default function App() {
+const App = ({ redirect }) => {
+  if (redirect !== false) {
+    redirectSucceeded();
+    return <Redirect to={redirect} />;
+  }
   return (
     <div>
       <Helmet>
@@ -44,4 +53,14 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+
+const mapStateToProps = createStructuredSelector({
+  redirect: makeSelectRedirect(),
+});
+
+App.propTypes = {
+  redirect: PropTypes.bool,
+};
+
+export default connect(mapStateToProps)(App);

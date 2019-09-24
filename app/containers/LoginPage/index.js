@@ -10,12 +10,12 @@ import { changeLoginData } from './actions';
 
 const key = 'loginPage';
 
-const LoginPage = ({ loginName, password, onChangeLoginData }) => {
+const LoginPage = ({ loginName, password, onChangeLoginData, onSubmit }) => {
   useInjectReducer({ key, reducer });
 
   return (
     <div>
-      <form onSubmit={console.log('submit')} className="col s12">
+      <form onSubmit={onSubmit()} className="col s12">
         <Row>
           <TextInput
             s="12"
@@ -52,6 +52,7 @@ LoginPage.propTypes = {
   loginName: PropTypes.string,
   password: PropTypes.string,
   onChangeLoginData: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -63,6 +64,10 @@ function mapDispatchToProps(dispatch) {
   return {
     onChangeLoginData: evt =>
       dispatch(changeLoginData(evt.target.name, evt.target.value)),
+    onSubmit: evt => {
+      evt.preventDefault();
+      dispatch();
+    },
   };
 }
 
