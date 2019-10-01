@@ -9,6 +9,7 @@ import SignUpPage from 'containers/SignUpPage/Loadable';
 import 'materialize-css/dist/js/materialize.min';
 
 import Header from 'containers/Header';
+import LogOut from 'containers/LogOut/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
 import GlobalStyle from '../../global-styles';
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/sign-up" component={SignUpPage} />
+          <Route exact path="/logout" component={LogOut} />
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />

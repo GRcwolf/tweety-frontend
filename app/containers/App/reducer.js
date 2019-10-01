@@ -6,6 +6,7 @@ import {
   LOG_IN_USER,
   LOG_IN_USER_SUCCESS,
   LOG_IN_USER_ERROR,
+  LOG_OUT,
 } from './constants';
 
 export const initialState = {
@@ -68,6 +69,10 @@ const appReducer = (state = initialState, action) =>
       case LOG_IN_USER_ERROR:
         draft.loading = false;
         draft.error = action.error;
+        break;
+
+      case LOG_OUT:
+        draft.user = initialState.user;
         break;
     }
   });

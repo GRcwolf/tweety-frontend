@@ -5,6 +5,7 @@ import {
   LOG_IN_USER,
   LOG_IN_USER_SUCCESS,
   LOG_IN_USER_ERROR,
+  LOG_OUT,
 } from './constants';
 
 export function signUpUser() {
@@ -44,5 +45,11 @@ export function userLogInError(message) {
   return {
     type: LOG_IN_USER_ERROR,
     message,
+  };
+}
+
+export function logOut() {
+  return {
+    type: LOG_OUT,
   };
 }
