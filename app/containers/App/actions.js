@@ -4,6 +4,7 @@ import {
   SIGN_UP_USER_SUCCESS,
   LOG_IN_USER,
   LOG_IN_USER_SUCCESS,
+  LOG_IN_USER_ERROR,
 } from './constants';
 
 export function signUpUser() {
@@ -32,16 +33,16 @@ export function logInUser() {
   };
 }
 
-export function userLoggedIn(message) {
+export function userLoggedIn(userData) {
   return {
     type: LOG_IN_USER_SUCCESS,
-    message,
+    userData,
   };
 }
 
 export function userLogInError(message) {
   return {
-    type: LOG_IN_USER_SUCCESS,
+    type: LOG_IN_USER_ERROR,
     message,
   };
 }

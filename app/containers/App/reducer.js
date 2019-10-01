@@ -11,15 +11,23 @@ import {
 export const initialState = {
   loading: false,
   error: false,
-  user: false,
   redirect: false,
   tweetData: {
     tweets: false,
     topic: false,
   },
+  user: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
+    email: '',
+    admin: false,
+    authenticated: false,
+  },
 };
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable default-case, no-param-reassign, no-underscore-dangle */
 const appReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
@@ -46,6 +54,15 @@ const appReducer = (state = initialState, action) =>
       case LOG_IN_USER_SUCCESS:
         draft.loading = false;
         draft.error = false;
+        draft.user = {
+          id: action.userData._id || '',
+          firstName: action.userData.firstName || '',
+          lastName: action.userData.lastName || '',
+          userName: action.userData.userName || '',
+          email: action.userData.email || '',
+          admin: action.userData.admin || false,
+          authenticated: true,
+        };
         break;
 
       case LOG_IN_USER_ERROR:
