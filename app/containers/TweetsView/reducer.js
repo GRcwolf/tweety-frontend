@@ -3,7 +3,10 @@ import { GET_TOPIC, GET_TOPIC_SUCCESS, GET_TOPIC_ERROR } from './constants';
 
 export const initialState = {
   tweets: [],
-  activeTopic: '',
+  activeTopic: {
+    id: '',
+    topic: '',
+  },
   loading: false,
   error: false,
   topicLoaded: false,

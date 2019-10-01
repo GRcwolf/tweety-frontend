@@ -12,7 +12,7 @@ export const makeSelectTweets = () =>
 export const makeSelectTopic = () =>
   createSelector(
     selectTweetsView,
-    tweetsViewState => tweetsViewState.topic,
+    tweetsViewState => tweetsViewState.activeTopic.topic,
   );
 
 export const makeSelectTopicLoaded = () =>

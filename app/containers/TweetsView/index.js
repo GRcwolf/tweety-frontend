@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row } from 'react-materialize';
 import Tweet from 'components/Tweet';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -22,9 +22,11 @@ const TweetsView = ({ tweetAttributes, topic, topicLoaded, loadTopic }) => {
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
 
-  if (!topicLoaded) {
-    loadTopic();
-  }
+  useEffect(() => {
+    if (!topicLoaded) {
+      loadTopic();
+    }
+  });
 
   return (
     <>
