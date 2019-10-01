@@ -39,3 +39,6 @@ export const loginWithUsername = ({ username, password }) =>
   axios
     .post(`${apiPath}/login`, { username, password })
     .then(response => response.data);
+
+export const getActiveTopic = () =>
+  axios.get(`${apiPath}/getActiveTopic`).then(response => response.data);

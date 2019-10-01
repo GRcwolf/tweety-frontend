@@ -12,7 +12,7 @@ import TweetsView from '../TweetsView';
 export default function HomePage() {
   return (
     <Row>
-      <TweetsView tweetAttributes={[]} />
+      <TweetsView />
     </Row>
   );
 }
