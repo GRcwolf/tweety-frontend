@@ -2,8 +2,8 @@ import {
   SIGN_UP_USER,
   SIGN_UP_USER_ERROR,
   SIGN_UP_USER_SUCCESS,
-  REDIRECT_USER,
-  REDIRECT_SUCCEEDED,
+  LOG_IN_USER,
+  LOG_IN_USER_SUCCESS,
 } from './constants';
 
 export function signUpUser() {
@@ -26,15 +26,22 @@ export function userSignUpError(message) {
   };
 }
 
-export function redirectUser(location) {
+export function logInUser() {
   return {
-    type: REDIRECT_USER,
-    location,
+    type: LOG_IN_USER,
   };
 }
 
-export function redirectSucceeded() {
+export function userLoggedIn(message) {
   return {
-    type: REDIRECT_SUCCEEDED,
+    type: LOG_IN_USER_SUCCESS,
+    message,
+  };
+}
+
+export function userLogInError(message) {
+  return {
+    type: LOG_IN_USER_SUCCESS,
+    message,
   };
 }

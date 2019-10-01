@@ -38,3 +38,9 @@ export const makeSelectEmail = () =>
     selectSignUpPage,
     signUpPageState => signUpPageState.email,
   );
+
+export const makeSelectRedirect = () =>
+  createSelector(
+    selectSignUpPage,
+    signUpPageState => signUpPageState.redirect,
+  );

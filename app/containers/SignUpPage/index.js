@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Icon, Row, TextInput } from 'react-materialize';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import {
@@ -11,8 +12,9 @@ import {
   makeSelectLastName,
   makeSelectPassword,
   makeSelectUserName,
+  makeSelectRedirect,
 } from './selectors';
-import { changeUserObject } from './actions';
+import { changeUserObject, redirectSucceeded } from './actions';
 import { signUpUser } from '../App/actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -29,9 +31,17 @@ const SignUpPage = ({
   confirmPassword,
   onChangeUserObject,
   onFormSubmit,
+  onRedirect,
+  redirect,
 }) => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  if (redirect.length > 0) {
+    onRedirect();
+    return <Redirect to={redirect} />;
+  }
+
   return (
     <Row>
       <form onSubmit={onFormSubmit} className="col s12">
@@ -108,12 +118,14 @@ const SignUpPage = ({
 SignUpPage.propTypes = {
   onChangeUserObject: PropTypes.func,
   onFormSubmit: PropTypes.func,
+  onRedirect: PropTypes.func,
   firstName: PropTypes.string,
   userName: PropTypes.string,
   lastName: PropTypes.string,
   email: PropTypes.string,
   password: PropTypes.string,
   confirmPassword: PropTypes.string,
+  redirect: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -123,6 +135,7 @@ const mapStateToProps = createStructuredSelector({
   email: makeSelectEmail(),
   password: makeSelectPassword(),
   confirmPassword: makeSelectConfirmPassword(),
+  redirect: makeSelectRedirect(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -133,6 +146,7 @@ function mapDispatchToProps(dispatch) {
       evt.preventDefault();
       dispatch(signUpUser());
     },
+    onRedirect: () => dispatch(redirectSucceeded()),
   };
 }
 
