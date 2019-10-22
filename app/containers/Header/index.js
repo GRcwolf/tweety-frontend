@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeSelectUser } from 'containers/App/selectors';
-import { useInjectReducer } from '../../utils/injectReducer';
+import { useInjectReducer } from 'utils/injectReducer';
 import reducer from './reducer';
 
 const key = 'header';
@@ -16,6 +16,7 @@ const Header = ({ user }) => {
     <header>
       <Navbar alignLinks="right">
         <Link to="/">Home</Link>
+        {buildMenu(user)}
         <Dropdown
           trigger={
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -30,6 +31,13 @@ const Header = ({ user }) => {
     </header>
   );
 };
+
+function buildMenu(user) {
+  if (user.authenticated) {
+    return <Link to="/create-tweet">Create tweet</Link>;
+  }
+  return null;
+}
 
 function buildUserMenu(user) {
   if (!user.authenticated) {

@@ -11,7 +11,6 @@ const loginPageReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case CHANGE_LOGIN_FORM_DATA:
-        console.log(state);
         draft[action.field] = action.value;
         break;
     }

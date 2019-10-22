@@ -12,7 +12,6 @@ import {
 } from './selectors';
 
 export function* signUpUserCall() {
-  // eslint-disable-next-line no-param-reassign
   const firstname = yield select(makeSelectFirstName());
   const lastname = yield select(makeSelectLastName());
   const username = yield select(makeSelectUserName());

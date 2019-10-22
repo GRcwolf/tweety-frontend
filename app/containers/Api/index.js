@@ -42,3 +42,6 @@ export const loginWithUsername = ({ username, password }) =>
 
 export const getActiveTopic = () =>
   axios.get(`${apiPath}/getActiveTopic`).then(response => response.data);
+
+export const createTweet = content =>
+  axios.post(`${apiPath}/post`, { content }).then(response => response.data);
