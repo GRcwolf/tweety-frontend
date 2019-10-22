@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { loginWithUsername, loginWithEmail } from 'containers/Api';
-import { LOG_IN_USER } from '../App/constants';
-import { userLoggedIn } from '../App/actions';
+import { errorMessage, userLoggedIn } from 'containers/App/actions';
+import { LOG_IN_USER, GENERIC_ERROR_MESSAGE } from 'containers/App/constants';
 import { makeSelectLoginName, makeSelectPassword } from './selectors';
 
 export function* logInUserCall() {
@@ -9,18 +9,26 @@ export function* logInUserCall() {
   const authName = yield select(makeSelectLoginName());
   const password = btoa(yield select(makeSelectPassword()));
   let response;
-  if (authName.indexOf('@') === -1) {
-    response = yield call(loginWithUsername, {
-      username: authName,
-      password,
-    });
-  } else {
-    response = yield call(loginWithEmail, {
-      email: authName,
-      password,
-    });
+  try {
+    if (authName.indexOf('@') === -1) {
+      response = yield call(loginWithUsername, {
+        username: authName,
+        password,
+      });
+    } else {
+      response = yield call(loginWithEmail, {
+        email: authName,
+        password,
+      });
+    }
+    if (response.type === 'Error') {
+      yield put(errorMessage(response.message));
+      return;
+    }
+    yield put(userLoggedIn(response.message));
+  } catch (exception) {
+    yield put(errorMessage(GENERIC_ERROR_MESSAGE));
   }
-  yield put(userLoggedIn(response.message));
 }
 
 export default function* logIn() {

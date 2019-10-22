@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { createUser } from 'containers/Api';
 import { userSignedUp, errorMessage } from 'containers/App/actions';
-import { SIGN_UP_USER } from 'containers/App/constants';
+import { SIGN_UP_USER, GENERIC_ERROR_MESSAGE } from 'containers/App/constants';
 import { redirectUser } from './actions';
 import {
   makeSelectEmail,
@@ -33,7 +33,7 @@ export function* signUpUserCall() {
     yield put(userSignedUp(response));
     yield put(redirectUser('/login'));
   } catch (exception) {
-    yield put(errorMessage('Ein fehler ist aufgetreten'));
+    yield put(errorMessage(GENERIC_ERROR_MESSAGE));
   }
 }
 

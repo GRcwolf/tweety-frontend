@@ -1,5 +1,8 @@
 export const SITE_NAME = 'Tweety';
 
+export const GENERIC_ERROR_MESSAGE = 'Ein fehler ist aufgetreten';
+
+// Action constants.
 export const SIGN_UP_USER = 'Tweety/App/SIGN_UP_USER';
 export const SIGN_UP_USER_SUCCESS = 'Tweety/App/SIGN_UP_USER_SUCCESS';
 export const SIGN_UP_USER_ERROR = 'Tweety/App/SIGN_UP_USER_SUCCESS';
