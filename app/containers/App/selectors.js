@@ -1,21 +1,27 @@
 import { createSelector } from 'reselect';
 
-const selectHeader = state => state.global;
+const selectGlobal = state => state.global;
 
 export const makeSelectRedirect = () =>
   createSelector(
-    selectHeader,
+    selectGlobal,
     globalState => globalState.redirect,
   );
 
 export const makeSelectUser = () =>
   createSelector(
-    selectHeader,
+    selectGlobal,
     globalState => globalState.user,
   );
 
 export const makeSelectUserIsAurhenticated = () =>
   createSelector(
-    selectHeader,
+    selectGlobal,
     globalState => globalState.user.authenticated,
+  );
+
+export const makeSelectErrors = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.errors,
   );

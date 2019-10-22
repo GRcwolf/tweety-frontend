@@ -7,11 +7,13 @@ import {
   LOG_IN_USER_SUCCESS,
   LOG_IN_USER_ERROR,
   LOG_OUT,
+  SET_ERROR_MESSAGE,
+  UNSET_ERRORS,
 } from './constants';
 
 export const initialState = {
   loading: false,
-  error: false,
+  errors: [],
   redirect: false,
   tweetData: {
     tweets: false,
@@ -34,27 +36,23 @@ const appReducer = (state = initialState, action) =>
     switch (action.type) {
       case SIGN_UP_USER:
         draft.loading = true;
-        draft.error = false;
         break;
 
       case SIGN_UP_USER_SUCCESS:
         draft.loading = false;
-        draft.error = false;
         break;
 
       case SIGN_UP_USER_ERROR:
         draft.loading = false;
-        draft.error = action.message;
+        draft.errors = action.message;
         break;
 
       case LOG_IN_USER:
         draft.loading = true;
-        draft.error = false;
         break;
 
       case LOG_IN_USER_SUCCESS:
         draft.loading = false;
-        draft.error = false;
         draft.user = {
           id: action.userData._id || '',
           firstName: action.userData.firstName || '',
@@ -68,11 +66,19 @@ const appReducer = (state = initialState, action) =>
 
       case LOG_IN_USER_ERROR:
         draft.loading = false;
-        draft.error = action.error;
+        draft.errors = action.error;
         break;
 
       case LOG_OUT:
         draft.user = initialState.user;
+        break;
+
+      case SET_ERROR_MESSAGE:
+        draft.errors.push(action.message);
+        break;
+
+      case UNSET_ERRORS:
+        draft.errors = [];
         break;
     }
   });

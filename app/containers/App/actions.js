@@ -6,6 +6,8 @@ import {
   LOG_IN_USER_SUCCESS,
   LOG_IN_USER_ERROR,
   LOG_OUT,
+  SET_ERROR_MESSAGE,
+  UNSET_ERRORS,
 } from './constants';
 
 export function signUpUser() {
@@ -51,5 +53,18 @@ export function userLogInError(message) {
 export function logOut() {
   return {
     type: LOG_OUT,
+  };
+}
+
+export function errorMessage(message) {
+  return {
+    type: SET_ERROR_MESSAGE,
+    message,
+  };
+}
+
+export function unsetErrors() {
+  return {
+    type: UNSET_ERRORS,
   };
 }

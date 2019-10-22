@@ -1,7 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { createUser } from 'containers/Api';
-import { userSignedUp } from 'containers/App/actions';
-import { SIGN_UP_USER } from '../App/constants';
+import { userSignedUp, errorMessage } from 'containers/App/actions';
+import { SIGN_UP_USER } from 'containers/App/constants';
 import { redirectUser } from './actions';
 import {
   makeSelectEmail,
@@ -17,15 +17,20 @@ export function* signUpUserCall() {
   const username = yield select(makeSelectUserName());
   const email = yield select(makeSelectEmail());
   const password = btoa(yield select(makeSelectPassword()));
-  const response = yield call(createUser, {
-    firstname,
-    lastname,
-    username,
-    email,
-    password,
-  });
-  yield put(userSignedUp(response));
-  yield put(redirectUser('/login'));
+  let response;
+  try {
+    response = yield call(createUser, {
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+    });
+    yield put(userSignedUp(response));
+    yield put(redirectUser('/login'));
+  } catch (exception) {
+    yield put(errorMessage('Ein fehler ist aufgetreten'));
+  }
 }
 
 export default function* signUpData() {
