@@ -75,6 +75,7 @@ const appReducer = (state = initialState, action) =>
 
       case SET_ERROR_MESSAGE:
         draft.errors.push(action.message);
+        draft.loading = false;
         break;
 
       case UNSET_ERRORS:

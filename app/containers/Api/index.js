@@ -13,13 +13,17 @@ export const createUser = ({
   password,
 }) =>
   axios
-    .post(`${apiPath}/createUser`, {
-      firstname,
-      lastname,
-      username,
-      email,
-      password,
-    })
+    .post(
+      `${apiPath}/createUser`,
+      {
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+      },
+      headers,
+    )
     .then(response => response.data);
 
 export const checkUsername = username =>

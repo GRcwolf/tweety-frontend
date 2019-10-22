@@ -12,11 +12,14 @@ import Header from 'containers/Header';
 import LogOut from 'containers/LogOut/Loadable';
 import CreateTweetForm from 'containers/CreateTweetForm/Loadable';
 import LoginPage from 'containers/LoginPage/Loadable';
+import ErrorMessages from 'containers/ErrorMessages';
 import GlobalStyle from '../../global-styles';
+import { SITE_NAME } from './constants';
 
 const App = () => (
   <div>
     <Helmet>
+      <title>{SITE_NAME}</title>
       <link
         href="http://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
@@ -34,6 +37,7 @@ const App = () => (
           <Route component={NotFoundPage} />
         </Switch>
         <GlobalStyle />
+        <ErrorMessages />
       </div>
     </div>
   </div>
