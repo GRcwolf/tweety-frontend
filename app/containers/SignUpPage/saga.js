@@ -26,6 +26,10 @@ export function* signUpUserCall() {
       email,
       password,
     });
+    if (response.type === 'Error') {
+      yield put(errorMessage(response.message));
+      return;
+    }
     yield put(userSignedUp(response));
     yield put(redirectUser('/login'));
   } catch (exception) {

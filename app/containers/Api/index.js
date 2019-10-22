@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 const apiPath = 'http://localhost:3000';
+const headers = {
+  withCredentials: true,
+};
 
 export const createUser = ({
   firstname,
@@ -32,16 +35,18 @@ export const getUser = username =>
 
 export const loginWithEmail = ({ email, password }) =>
   axios
-    .post(`${apiPath}/login`, { email, password })
+    .post(`${apiPath}/login`, { email, password }, headers)
     .then(response => response.data);
 
 export const loginWithUsername = ({ username, password }) =>
   axios
-    .post(`${apiPath}/login`, { username, password })
+    .post(`${apiPath}/login`, { username, password }, headers)
     .then(response => response.data);
 
 export const getActiveTopic = () =>
   axios.get(`${apiPath}/getActiveTopic`).then(response => response.data);
 
 export const createTweet = content =>
-  axios.post(`${apiPath}/post`, { content }).then(response => response.data);
+  axios
+    .post(`${apiPath}/post`, { content }, headers)
+    .then(response => response.data);
