@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiPath = 'http://localhost:3001';
+const apiPath = 'http://localhost:3000';
 
 export const createUser = ({
   firstname,
