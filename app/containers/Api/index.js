@@ -50,7 +50,15 @@ export const loginWithUsername = ({ username, password }) =>
 export const getActiveTopic = () =>
   axios.get(`${apiPath}/getActiveTopic`).then(response => response.data);
 
+export const getTopics = () =>
+  axios.get(`${apiPath}/getTopics`, headers).then(response => response.data);
+
 export const createTweet = content =>
   axios
     .post(`${apiPath}/post`, { content }, headers)
+    .then(response => response.data);
+
+export const getTweets = () =>
+  axios
+    .get(`${apiPath}/getPostsOfToday`, headers)
     .then(response => response.data);

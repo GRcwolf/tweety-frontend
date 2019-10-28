@@ -33,10 +33,14 @@ const Header = ({ user }) => {
 };
 
 function buildMenu(user) {
+  const menu = [];
   if (user.authenticated) {
-    return <Link to="/create-tweet">Create tweet</Link>;
+    menu.push(<Link to="/create-tweet">Create tweet</Link>);
   }
-  return null;
+  if (user.admin) {
+    menu.push(<Link to="/topics">Manage Topics</Link>);
+  }
+  return menu;
 }
 
 function buildUserMenu(user) {

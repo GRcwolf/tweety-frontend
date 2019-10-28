@@ -25,3 +25,15 @@ export const makeSelectErrors = () =>
     selectGlobal,
     globalState => globalState.errors,
   );
+
+export const makeSelectUsers = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.cache.users,
+  );
+
+export const makeSelectUsersToGet = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.cache.usersToGet,
+  );

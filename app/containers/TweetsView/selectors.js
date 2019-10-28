@@ -20,3 +20,9 @@ export const makeSelectTopicLoaded = () =>
     selectTweetsView,
     tweetsViewState => tweetsViewState.topicLoaded,
   );
+
+export const makeSelectTweetsLoaded = () =>
+  createSelector(
+    selectTweetsView,
+    tweetsViewState => tweetsViewState.tweetsLoaded,
+  );

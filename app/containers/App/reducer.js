@@ -9,12 +9,21 @@ import {
   LOG_OUT,
   SET_ERROR_MESSAGE,
   UNSET_ERRORS,
+  GET_USER,
+  GET_USER_SUCCESS,
+  GET_USER_ERROR,
+  SET_USERS_TO_GET,
+  UNSET_USERS_TO_GET,
 } from './constants';
 
 export const initialState = {
   loading: false,
   errors: [],
   redirect: false,
+  cache: {
+    users: {},
+    usersToGet: [],
+  },
   tweetData: {
     tweets: false,
     topic: false,
@@ -80,6 +89,27 @@ const appReducer = (state = initialState, action) =>
 
       case UNSET_ERRORS:
         draft.errors = [];
+        break;
+
+      case GET_USER:
+        draft.cache.loading = true;
+        break;
+
+      case GET_USER_SUCCESS:
+        draft.loading = false;
+        draft.cache.users[action.user._id] = action.user;
+        break;
+
+      case GET_USER_ERROR:
+        draft.cache.loading = false;
+        break;
+
+      case SET_USERS_TO_GET:
+        draft.cache.usersToGet = action.userIds;
+        break;
+
+      case UNSET_USERS_TO_GET:
+        draft.cache.usersToGet = [];
         break;
     }
   });

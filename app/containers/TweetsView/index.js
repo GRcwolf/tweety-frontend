@@ -1,30 +1,42 @@
 import React, { useEffect } from 'react';
 import { Row } from 'react-materialize';
-import Tweet from 'components/Tweet';
+import Tweet from 'containers/Tweet';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { NO_TWEETS_FOUND_ERROR_MESSAGE } from './constants';
+import { getUser } from 'containers/App/actions';
+import { NO_TWEETS_FOUND_ERROR_MESSAGE, REFRESH_INTERVAL } from './constants';
 import saga from './saga';
 import reducer from './reducer';
-import { getTopic } from './actions';
+import { getTopic, getTweets } from './actions';
 import {
   makeSelectTweets,
   makeSelectTopic,
   makeSelectTopicLoaded,
+  makeSelectTweetsLoaded,
 } from './selectors';
 
 const key = 'tweetsView';
 
-const TweetsView = ({ tweetAttributes, topic, topicLoaded, loadTopic }) => {
+const TweetsView = ({
+  tweetAttributes,
+  topic,
+  topicLoaded,
+  loadTopic,
+  loadTweets,
+  tweetsLoaded,
+}) => {
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
 
   useEffect(() => {
     if (!topicLoaded) {
       loadTopic();
+    }
+    if (tweetsLoaded < Date.now() - REFRESH_INTERVAL) {
+      loadTweets();
     }
   });
 
@@ -68,21 +80,26 @@ function renderTweets(tweetAttributes) {
 }
 
 TweetsView.propTypes = {
-  tweetAttributes: PropTypes.array,
+  tweetAttributes: PropTypes.object,
   topic: PropTypes.string,
   topicLoaded: PropTypes.bool,
   loadTopic: PropTypes.func,
+  loadTweets: PropTypes.func,
+  tweetsLoaded: PropTypes.number,
 };
 
 const mapStateToProps = createStructuredSelector({
   tweetAttributes: makeSelectTweets(),
   topic: makeSelectTopic(),
   topicLoaded: makeSelectTopicLoaded(),
+  tweetsLoaded: makeSelectTweetsLoaded(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     loadTopic: () => dispatch(getTopic()),
+    loadTweets: () => dispatch(getTweets()),
+    loadUser: user => dispatch(getUser(user)),
   };
 }
 export default connect(

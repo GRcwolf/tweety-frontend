@@ -8,6 +8,11 @@ import {
   LOG_OUT,
   SET_ERROR_MESSAGE,
   UNSET_ERRORS,
+  GET_USER,
+  GET_USER_SUCCESS,
+  GET_USER_ERROR,
+  SET_USERS_TO_GET,
+  UNSET_USERS_TO_GET,
 } from './constants';
 
 export function signUpUser() {
@@ -66,5 +71,38 @@ export function errorMessage(message) {
 export function unsetErrors() {
   return {
     type: UNSET_ERRORS,
+  };
+}
+
+export function getUser(userId) {
+  return {
+    type: GET_USER,
+    userId,
+  };
+}
+
+export function getUserSuccess(user) {
+  return {
+    type: GET_USER_SUCCESS,
+    user,
+  };
+}
+
+export function getUserError() {
+  return {
+    type: GET_USER_ERROR,
+  };
+}
+
+export function setUsersToGet(userIds) {
+  return {
+    type: SET_USERS_TO_GET,
+    userIds,
+  };
+}
+
+export function unsetUsersToGet() {
+  return {
+    type: UNSET_USERS_TO_GET,
   };
 }
