@@ -67,3 +67,6 @@ export const getTweets = () =>
   axios
     .get(`${apiPath}/getPostsOfToday`, headers)
     .then(response => response.data);
+
+export const sessionDestroy = () =>
+  axios.get(`${apiPath}/logout`, headers).then(response => response.data);

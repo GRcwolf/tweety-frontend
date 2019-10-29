@@ -8,12 +8,12 @@ import {
   SET_TOPIC_ERROR_MESSAGE,
 } from './constants';
 import { makeSelectTopicToSet } from './selector';
-
 import {
   getTopicsError,
   getTopicsSuccess,
   setTopicSuccess,
   setTopicError,
+  unsetTopicToSet,
 } from './actions';
 
 export function* setTopicCall() {
@@ -21,10 +21,12 @@ export function* setTopicCall() {
     const topicToSet = yield select(makeSelectTopicToSet());
     const response = yield call(setTopic, topicToSet);
     yield put(setTopicSuccess(response));
+    yield put(errorMessage(response.message));
   } catch {
     yield put(setTopicError());
     yield put(errorMessage(SET_TOPIC_ERROR_MESSAGE));
   }
+  yield put(unsetTopicToSet());
 }
 
 export function* getTopicsCall() {
