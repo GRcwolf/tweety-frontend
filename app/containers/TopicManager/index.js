@@ -6,21 +6,29 @@ import { connect } from 'react-redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { makeSelectUser } from 'containers/App/selectors';
-import { Row, Icon, Button } from 'react-materialize';
+import { Row, Icon, Button, TextInput } from 'react-materialize';
 import { refreshTopic } from 'containers/TweetsView/actions';
 import { REFRESH_INTERVAL } from './constants';
 import {
+  makeSelectNewTopicName,
   makeSelectTopics,
   makeSelectTopicsLoaded,
   makeSelectTopicToSet,
 } from './selector';
-import { getTopics, setTopicToSet, setTopic } from './actions';
+import {
+  getTopics,
+  setTopicToSet,
+  setTopic,
+  changeTopicNameTextarea,
+  createNewTopic,
+} from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
 const key = 'topicManager';
 
 const TopicManager = ({
+  newTopic,
   user,
   topics,
   topicToSet,
@@ -29,6 +37,8 @@ const TopicManager = ({
   onSetTopicToSet,
   onSetTopic,
   onRefreshTopic,
+  onChangeTopicName,
+  submitCreateTopic,
 }) => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -54,6 +64,19 @@ const TopicManager = ({
         <h1>Topics</h1>
       </Row>
       <Row>{renderTopics(topics, onSetTopicToSet)}</Row>
+      <Row>
+        <form onSubmit={submitCreateTopic} className="col s12">
+          <Row>
+            <TextInput onChange={onChangeTopicName} s={12} value={newTopic} />
+          </Row>
+          <Row>
+            <Button>
+              Create topic
+              <Icon right>add</Icon>
+            </Button>
+          </Row>
+        </form>
+      </Row>
     </>
   );
 };
@@ -85,6 +108,7 @@ function renderTopics(topics, onSetTopicToSet) {
 }
 
 TopicManager.propTypes = {
+  newTopic: PropTypes.string,
   user: PropTypes.object,
   topics: PropTypes.object,
   topicToSet: PropTypes.string,
@@ -93,9 +117,12 @@ TopicManager.propTypes = {
   onSetTopicToSet: PropTypes.object,
   onSetTopic: PropTypes.func,
   onRefreshTopic: PropTypes.func,
+  onChangeTopicName: PropTypes.func,
+  submitCreateTopic: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
+  newTopic: makeSelectNewTopicName(),
   user: makeSelectUser(),
   topics: makeSelectTopics(),
   topicToSet: makeSelectTopicToSet(),
@@ -108,6 +135,12 @@ function mapDispatchToProps(dispatch) {
     onSetTopicToSet: id => dispatch(setTopicToSet(id)),
     onSetTopic: () => dispatch(setTopic()),
     onRefreshTopic: () => dispatch(refreshTopic()),
+    onChangeTopicName: evt =>
+      dispatch(changeTopicNameTextarea(evt.target.value)),
+    submitCreateTopic: evt => {
+      evt.preventDefault();
+      dispatch(createNewTopic());
+    },
   };
 }
 

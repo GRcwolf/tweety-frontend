@@ -20,3 +20,9 @@ export const makeSelectTopicToSet = () =>
     selectTopicManager,
     topicManagerState => topicManagerState.topicToSet,
   );
+
+export const makeSelectNewTopicName = () =>
+  createSelector(
+    selectTopicManager,
+    topicManagerState => topicManagerState.newTopicText,
+  );
