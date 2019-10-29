@@ -13,12 +13,11 @@ import {
 export function* getUserBySessionCall() {
   try {
     const userIdResponse = yield call(getUserBySession);
-    if (userIdResponse.type === 'Success') {
+    if (userIdResponse && userIdResponse.type === 'Success') {
       const userResponse = yield call(getUserById, userIdResponse.message);
       yield put(checkIfUserIsLoggedInSuccess(userResponse));
       return;
     }
-    yield put(errorMessage(userIdResponse.message));
   } catch {
     yield put(errorMessage(USER_AUTH_CHECK_ERROR_MESSAGE));
   }
