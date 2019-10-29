@@ -53,6 +53,11 @@ export const getActiveTopic = () =>
 export const getTopics = () =>
   axios.get(`${apiPath}/getTopics`, headers).then(response => response.data);
 
+export const setTopic = topic =>
+  axios
+    .post(`${apiPath}/setTopic`, { topic }, headers)
+    .then(response => response.data);
+
 export const createTweet = content =>
   axios
     .post(`${apiPath}/post`, { content }, headers)

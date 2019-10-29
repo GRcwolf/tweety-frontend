@@ -5,6 +5,7 @@ import {
   GET_TWEETS,
   GET_TWEETS_SUCCESS,
   GET_TWEETS_ERROR,
+  REFRESH_TOPIC,
 } from './constants';
 
 export function getTopic() {
@@ -42,5 +43,11 @@ export function getTweetsSuccess(reponse) {
 export function getTweetsError() {
   return {
     type: GET_TWEETS_ERROR,
+  };
+}
+
+export function refreshTopic() {
+  return {
+    type: REFRESH_TOPIC,
   };
 }

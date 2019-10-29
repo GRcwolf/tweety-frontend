@@ -11,5 +11,7 @@ export const GET_TWEETS = 'Tweety/TweetsView/GET_TWEETS';
 export const GET_TWEETS_ERROR = 'Tweety/TweetsView/GET_TWEETS_ERROR';
 export const GET_TWEETS_SUCCESS = 'Tweety/TweetsView/GET_TWEETS_SUCCESS';
 
+export const REFRESH_TOPIC = 'Tweety/TweetsView/REFRESH_TOPIC';
+
 // Configs.
 export const REFRESH_INTERVAL = 5000;

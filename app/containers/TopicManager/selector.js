@@ -14,3 +14,9 @@ export const makeSelectTopicsLoaded = () =>
     selectTopicManager,
     topicManagerState => topicManagerState.topicsLoaded,
   );
+
+export const makeSelectTopicToSet = () =>
+  createSelector(
+    selectTopicManager,
+    topicManagerState => topicManagerState.topicToSet,
+  );

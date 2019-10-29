@@ -6,6 +6,7 @@ import {
   GET_TWEETS,
   GET_TWEETS_ERROR,
   GET_TWEETS_SUCCESS,
+  REFRESH_TOPIC,
 } from './constants';
 
 export const initialState = {
@@ -15,7 +16,7 @@ export const initialState = {
     topic: '',
   },
   loading: false,
-  topicLoaded: false,
+  topicLoaded: 0,
   tweetsLoaded: 0,
 };
 
@@ -25,13 +26,12 @@ const tweetsViewReducer = (state = initialState, action) =>
     switch (action.type) {
       case GET_TOPIC:
         draft.loading = true;
-        draft.topicLoaded = false;
         break;
 
       case GET_TOPIC_SUCCESS:
         draft.activeTopic = action.topic;
         draft.loading = false;
-        draft.topicLoaded = true;
+        draft.topicLoaded = Date.now();
         break;
 
       case GET_TOPIC_ERROR:
@@ -50,6 +50,11 @@ const tweetsViewReducer = (state = initialState, action) =>
 
       case GET_TWEETS_ERROR:
         draft.loading = false;
+        break;
+
+      case REFRESH_TOPIC:
+        draft.topicLoaded = 0;
+        draft.tweetsLoaded = 0;
         break;
     }
   });

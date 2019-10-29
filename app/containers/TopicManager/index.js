@@ -7,20 +7,40 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { makeSelectUser } from 'containers/App/selectors';
 import { Row, Icon, Button } from 'react-materialize';
-import { makeSelectTopics, makeSelectTopicsLoaded } from './selector';
-import { getTopics } from './actions';
+import { refreshTopic } from 'containers/TweetsView/actions';
+import { REFRESH_INTERVAL } from './constants';
+import {
+  makeSelectTopics,
+  makeSelectTopicsLoaded,
+  makeSelectTopicToSet,
+} from './selector';
+import { getTopics, setTopicToSet, setTopic } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
 const key = 'topicManager';
 
-const TopicManager = ({ user, topics, topicsLoaded, onGetTopics }) => {
+const TopicManager = ({
+  user,
+  topics,
+  topicToSet,
+  topicsLoaded,
+  onGetTopics,
+  onSetTopicToSet,
+  onSetTopic,
+  onRefreshTopic,
+}) => {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    if (!topicsLoaded || topics.length === 0) {
+    if (topicsLoaded < Date.now() - REFRESH_INTERVAL || topics.length === 0) {
       onGetTopics();
+    }
+
+    if (topicToSet.length > 0) {
+      onRefreshTopic();
+      onSetTopic();
     }
   });
 
@@ -33,22 +53,26 @@ const TopicManager = ({ user, topics, topicsLoaded, onGetTopics }) => {
       <Row>
         <h1>Topics</h1>
       </Row>
-      <Row>{renderTopics(topics)}</Row>
+      <Row>{renderTopics(topics, onSetTopicToSet)}</Row>
     </>
   );
 };
 
-function renderTopics(topics) {
+function renderTopics(topics, onSetTopicToSet) {
   const elements = [];
   for (let i = 0; i < topics.length; i += 1) {
     if (topics[i] && topics[i].topic) {
       elements.push(
         <Row>
           <Row>
-            <h2>{topics[i].topic}</h2>
+            <h4>{topics[i].topic}</h4>
           </Row>
           <Row>
-            <Button waves="light">
+            {/* eslint-disable no-underscore-dangle */}
+            <Button
+              waves="light"
+              onClick={() => onSetTopicToSet(topics[i]._id)}
+            >
               Activate
               <Icon right>check</Icon>
             </Button>
@@ -63,19 +87,27 @@ function renderTopics(topics) {
 TopicManager.propTypes = {
   user: PropTypes.object,
   topics: PropTypes.object,
+  topicToSet: PropTypes.string,
   topicsLoaded: PropTypes.bool,
   onGetTopics: PropTypes.func,
+  onSetTopicToSet: PropTypes.object,
+  onSetTopic: PropTypes.func,
+  onRefreshTopic: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   user: makeSelectUser(),
   topics: makeSelectTopics(),
+  topicToSet: makeSelectTopicToSet(),
   topicsLoaded: makeSelectTopicsLoaded(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     onGetTopics: () => dispatch(getTopics()),
+    onSetTopicToSet: id => dispatch(setTopicToSet(id)),
+    onSetTopic: () => dispatch(setTopic()),
+    onRefreshTopic: () => dispatch(refreshTopic()),
   };
 }
 
