@@ -37,3 +37,9 @@ export const makeSelectUsersToGet = () =>
     selectGlobal,
     globalState => globalState.cache.usersToGet,
   );
+
+export const makeSelectInitialCheck = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.initialAuthCheck,
+  );

@@ -70,3 +70,11 @@ export const getTweets = () =>
 
 export const sessionDestroy = () =>
   axios.get(`${apiPath}/logout`, headers).then(response => response.data);
+
+export const getUserById = userId =>
+  axios
+    .get(`${apiPath}/getUserWithId?id=${userId}`, headers)
+    .then(response => response.data);
+
+export const getUserBySession = () =>
+  axios.get(`${apiPath}/loggedin`, headers).then(response => response.data);

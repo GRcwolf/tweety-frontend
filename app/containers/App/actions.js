@@ -12,7 +12,10 @@ import {
   GET_USER_SUCCESS,
   GET_USER_ERROR,
   SET_USERS_TO_GET,
+  CHECK_IF_USER_IS_AUTHENTICATED,
+  CHECK_IF_USER_IS_AUTHENTICATED_SUCCESS,
   UNSET_USERS_TO_GET,
+  CHECK_IF_USER_IS_AUTHENTICATED_SUCCEEDED,
 } from './constants';
 
 export function signUpUser() {
@@ -104,5 +107,24 @@ export function setUsersToGet(userIds) {
 export function unsetUsersToGet() {
   return {
     type: UNSET_USERS_TO_GET,
+  };
+}
+
+export function checkIfUserIsLoggedIn() {
+  return {
+    type: CHECK_IF_USER_IS_AUTHENTICATED,
+  };
+}
+
+export function checkIfUserIsLoggedInSuccess(user) {
+  return {
+    type: CHECK_IF_USER_IS_AUTHENTICATED_SUCCESS,
+    user,
+  };
+}
+
+export function checkIfUserIsLoggedInSucceeeded() {
+  return {
+    type: CHECK_IF_USER_IS_AUTHENTICATED_SUCCEEDED,
   };
 }

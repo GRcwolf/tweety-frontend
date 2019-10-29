@@ -14,6 +14,8 @@ import {
   GET_USER_ERROR,
   SET_USERS_TO_GET,
   UNSET_USERS_TO_GET,
+  CHECK_IF_USER_IS_AUTHENTICATED_SUCCESS,
+  CHECK_IF_USER_IS_AUTHENTICATED_SUCCEEDED,
 } from './constants';
 
 export const initialState = {
@@ -37,6 +39,7 @@ export const initialState = {
     admin: false,
     authenticated: false,
   },
+  initialAuthCheck: false,
 };
 
 /* eslint-disable default-case, no-param-reassign, no-underscore-dangle */
@@ -110,6 +113,23 @@ const appReducer = (state = initialState, action) =>
 
       case UNSET_USERS_TO_GET:
         draft.cache.usersToGet = [];
+        break;
+
+      case CHECK_IF_USER_IS_AUTHENTICATED_SUCCESS:
+        draft.user = {
+          id: action.user._id,
+          firstName: action.user.firstName,
+          lastName: action.user.lastName,
+          userName: action.user.userName,
+          email: action.user.email,
+          admin: action.user.admin,
+          authenticated: true,
+        };
+        draft.initialAuthCheck = true;
+        break;
+
+      case CHECK_IF_USER_IS_AUTHENTICATED_SUCCEEDED:
+        draft.initialAuthCheck = true;
         break;
     }
   });
