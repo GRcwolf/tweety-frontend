@@ -46,9 +46,9 @@ const TweetsView = ({
         <h1>{topic}</h1>
       </Row>
       <Row>
-        <div className="tweet-overview col s12">
-          {renderTweets(tweetAttributes)}
-        </div>
+        <table className="tweet-overview striped">
+          <tbody>{renderTweets(tweetAttributes)}</tbody>
+        </table>
       </Row>
     </>
   );
@@ -63,11 +63,7 @@ function renderTweets(tweetAttributes) {
       elementIndex += 1
     ) {
       const attributes = tweetAttributes[elementIndex];
-      renderElements.push(
-        <Row>
-          <Tweet {...attributes} />
-        </Row>,
-      );
+      renderElements.push(<Tweet {...attributes} />);
     }
   } else {
     renderElements.push(
